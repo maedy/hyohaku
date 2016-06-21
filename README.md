@@ -26,17 +26,12 @@ zip という名前でディレクトリが作成され、ZIP ファイルが生
 オプションは特にありません。実行イメージは以下の通りです。
 
 `
-$ mkdir pdf
-  
-$ cp *.pdf pdf/
-  
-$ sh mkZip.sh
-  
-START
-  
-...
-  
-DONE
+    $ mkdir pdf
+    $ cp *.pdf pdf/
+    $ sh mkZip.sh
+    START
+    ...
+    DONE
 `
   
 pdf にあるファイルをすべて処理すると done という名前のディレクトリにオリジナルのファイルが移動します。
