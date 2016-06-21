@@ -66,7 +66,7 @@ do
 	DIR_NAME=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ ..*//' -e 's/\]/\] /'`
 	echo ${DIR_NAME}
 	FILE_BASE=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ / 第/' -e 's/\]/\] /'`
-	echo ${FILE_BASE}
+	echo ${FILE_BASE}.zip
 
 	if [ ! -d ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} ]; then
 		mkdir -p ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} 
@@ -77,8 +77,6 @@ do
 	cd ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}
 
 	pdfimages -j ${FILE_BASE}.pdf ${FILE_BASE}
-
-	rm -f ${FILE_BASE}.pdf
 
 	if [ ! -d color ]; then
 		mkdir color
@@ -107,7 +105,7 @@ do
 	chmod 664 ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip 
 	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip ${ZIP_DIR}/${DIR_NAME}/
 
-	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.pdf ${DONE_DIR}/${FILE_NAME}
+	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.pdf ${DONE_DIR}/${ORIGINAL_FILE_NAME}
 	
 	rm -rf ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} 
 
