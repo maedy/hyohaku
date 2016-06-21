@@ -1,4 +1,16 @@
 #!/bin/sh
+# A script to exchange from pdf to zip file scanned by the service 漫画スキャン王.
+#Copyright (C) 2016 Ryo
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#You should have received a copy of the GNU General Public License
+#along with this program. If not, see [http://www.gnu.org/licenses/].
 
 TASK_DIR="pdf"
 WORK_DIR="jpg"
@@ -50,11 +62,11 @@ for I in `ls ${TASK_DIR}/*.pdf`
 do
 	echo START
 	ORIGINAL_FILE_NAME=`echo ${I} | sed -e 's:..*/::'` 
-	echo ORIGINAL_FILE_NAME ${ORIGINAL_FILE_NAME}
+	echo ${ORIGINAL_FILE_NAME}
 	DIR_NAME=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ ..*//' -e 's/\]/\] /'`
-	echo DIR_NAME ${DIR_NAME}
+	echo ${DIR_NAME}
 	FILE_BASE=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ / 第/' -e 's/\]/\] /'`
-	echo FILE_BASE ${FILE_BASE}
+	echo ${FILE_BASE}
 
 	if [ ! -d ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} ]; then
 		mkdir -p ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} 
@@ -101,3 +113,6 @@ do
 
 	echo DONE
 done
+
+rm -rf ${WORK_DIR}
+
