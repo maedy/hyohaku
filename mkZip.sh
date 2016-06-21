@@ -21,6 +21,15 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
+which zip > /dev/null
+
+if [ $? != 0 ]; then
+	echo You need Zip.
+	echo http://www.info-zip.org/
+	exit 1
+fi
+
+
 if [ ! -d ${WORK_DIR} ]; then
 	mkdir ${WORK_DIR} 
 fi
