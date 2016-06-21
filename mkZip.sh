@@ -101,8 +101,6 @@ do
 		mkdir ${ZIP_DIR}/${DIR_NAME}
 	fi
 
-	chown :public ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip 
-	chmod 664 ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip 
 	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip ${ZIP_DIR}/${DIR_NAME}/
 
 	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.pdf ${DONE_DIR}/${ORIGINAL_FILE_NAME}
