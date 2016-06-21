@@ -27,10 +27,15 @@ zip という名前でディレクトリが作成され、ZIP ファイルが生
 
 `
 $ mkdir pdf
+  
 $ cp *.pdf pdf/
+  
 $ sh mkZip.sh
+  
 START
+  
 ...
+  
 DONE
 `
   
