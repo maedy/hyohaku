@@ -33,11 +33,11 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-which zip > /dev/null
+which 7za > /dev/null
 
 if [ $? != 0 ]; then
-	echo You need Zip.
-	echo http://www.info-zip.org/
+	echo You need P7ZIP.
+	echo http://p7zip.sourceforge.net/
 	exit 1
 fi
 
@@ -63,10 +63,17 @@ do
 	echo START
 	ORIGINAL_FILE_NAME=`echo ${I} | sed -e 's:..*/::'` 
 	echo ${ORIGINAL_FILE_NAME}
-	DIR_NAME=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ ..*//' -e 's/\]/\] /'`
-	echo ${DIR_NAME}
-	FILE_BASE=`echo ${I} | sed -e 's:..*/::' -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\]\1/' -e 's/ / 第/' -e 's/\]/\] /'`
-	echo ${FILE_BASE}.zip
+
+	echo ${ORIGINAL_FILE_NAME} | grep '(画)\|(漫)\|(作)\|(原)\|＆' > /dev/null
+	if [ $? != 0 ]; then
+		DIR_NAME=`echo ${ORIGINAL_FILE_NAME} | sed -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\] \1/' -e 's/^\(..*\) \([^ ][^ ]*巻\)$/\1/'`
+		FILE_BASE=`echo ${ORIGINAL_FILE_NAME} | sed -e 's/\(..*\) \([^ ][^ ]*\)(著).pdf$/\[\2\] \1/' -e 's/^\(..*\) \([^ ][^ ]*巻\)$/\1 第\2/'`
+	else
+		DIR_NAME=`echo ${ORIGINAL_FILE_NAME} | sed -e 's/^\(..*\) \([^ ][^ ]*\).pdf/\[\2\] \1/' -e 's/\[\(..*\)＆\(..*\)([^\][^\]]*\] \(..*\)$/[\1x\2] \3/' -e 's/([^)][^)]*)/x/' -e 's/([^)][^)]*)//' -e 's/ [^ ][^ ]*巻//'`
+		FILE_BASE=`echo ${ORIGINAL_FILE_NAME} | sed -e 's/^\(..*\) \([^ ][^ ]*\).pdf/\[\2\] \1/' -e 's/\[\(..*\)＆\(..*\)([^\][^\]]*\] \(..*\)$/[\1x\2] \3/' -e 's/([^)][^)]*)/x/' -e 's/([^)][^)]*)//' -e 's/\(..*\) \([^ ][^ ]*巻\)/\1 第\2/'`
+	fi
+
+	echo ${DIR_NAME}/${FILE_BASE}
 
 	if [ ! -d ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} ]; then
 		mkdir -p ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} 
@@ -93,7 +100,8 @@ do
 	mv color/* .
 	rm -rf color
 
-	zip ${FILE_BASE}.zip *.jpg > /dev/null
+	echo zipping ${FILE_BASE}.zip
+	7za a ${FILE_BASE}.zip *.jpg
 
 	cd - > /dev/null
 
@@ -104,11 +112,10 @@ do
 	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.zip ${ZIP_DIR}/${DIR_NAME}/
 
 	mv ${WORK_DIR}/${DIR_NAME}/${FILE_BASE}/${FILE_BASE}.pdf ${DONE_DIR}/${ORIGINAL_FILE_NAME}
-	
-	rm -rf ${WORK_DIR}/${DIR_NAME}/${FILE_BASE} 
 
 	echo DONE
 done
 
-rm -rf ${WORK_DIR}
+echo Please execute the follwoing to delete the working directory.
+echo rm -rf ${WORK_DIR}
 

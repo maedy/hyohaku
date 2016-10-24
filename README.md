@@ -17,7 +17,7 @@ ZIP ファイルに変換する過程で、 PDF ファイルの各ページを J
 
 * [ImageMagick](http://www.imagemagick.org/)
 * [Poppler](https://poppler.freedesktop.org/)
-* [Zip](http://www.info-zip.org/)
+* [P7ZIP](http://p7zip.sourceforge.net/)
 
 ## 使い方
 
