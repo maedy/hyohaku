@@ -58,7 +58,7 @@ fi
 IFS='
 '
 
-for I in `ls ${TASK_DIR}/*.pdf`
+ls ${TASK_DIR}/*.pdf | while read -r I
 do
 	echo START
 	ORIGINAL_FILE_NAME=`echo ${I} | sed -e 's:..*/::'` 
@@ -95,13 +95,13 @@ do
 		mv ${FILE_NAME} color/
 	done
 
-	mogrify -level 20%,80% *.jpg
+	mogrify -level 20%,80% *.jpg > /dev/null
 
 	mv color/* .
 	rm -rf color
 
 	echo zipping ${FILE_BASE}.zip
-	7za a ${FILE_BASE}.zip *.jpg
+	7za a ${FILE_BASE}.zip *.jpg > /dev/null
 
 	cd - > /dev/null
 
@@ -116,6 +116,6 @@ do
 	echo DONE
 done
 
-echo Please execute the follwoing to delete the working directory.
+echo Please manually delete the working directory by the following:
 echo rm -rf ${WORK_DIR}
 
